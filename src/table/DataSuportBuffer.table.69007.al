@@ -13,6 +13,16 @@ table 69007 "Data Suport Buffer"
         {
             DataClassification = CustomerContent;
         }
+        field(3; FieldName1; Text[30])
+        {
+            DataClassification = CustomerContent;
+        }
+        field(4; FieldValue1; Text[100])
+        {
+            DataClassification = CustomerContent;
+            CaptionClass = FieldName1;
+        }
+
     }
 
     keys
