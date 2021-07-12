@@ -13,14 +13,19 @@ table 69007 "Data Suport Buffer"
         {
             DataClassification = CustomerContent;
         }
-        field(3; FieldName1; Text[30])
+        field(3; FieldNo; Text[30])
         {
             DataClassification = CustomerContent;
         }
-        field(4; FieldValue1; Text[100])
+        field(4; FieldName; Text[30])
         {
             DataClassification = CustomerContent;
-            CaptionClass = FieldName1;
+            Editable = false;
+        }
+
+        field(5; FieldValue; Text[250])
+        {
+            DataClassification = CustomerContent;
         }
 
     }
@@ -32,28 +37,4 @@ table 69007 "Data Suport Buffer"
             Clustered = true;
         }
     }
-
-    var
-        myInt: Integer;
-
-    trigger OnInsert()
-    begin
-
-    end;
-
-    trigger OnModify()
-    begin
-
-    end;
-
-    trigger OnDelete()
-    begin
-
-    end;
-
-    trigger OnRename()
-    begin
-
-    end;
-
 }
