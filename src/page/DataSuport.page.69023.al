@@ -14,12 +14,23 @@ page 69023 "Data Suport"
                 {
                     ApplicationArea = All;
                     TableRelation = AllObjWithCaption."Object ID";
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update();
+                        CurrPage.FiltersSubf.Page.SetTableNo(TableNo);
+                    end;
                 }
                 field("Table Name"; GetTableName())
                 {
                     ApplicationArea = All;
                 }
-
+            }
+            group(Filters)
+            {
+                part(FiltersSubf; "Support Data Filters")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

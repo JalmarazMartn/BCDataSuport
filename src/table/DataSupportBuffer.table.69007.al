@@ -1,4 +1,4 @@
-table 69007 "Data Suport Buffer"
+table 69007 "Data Support Buffer"
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
