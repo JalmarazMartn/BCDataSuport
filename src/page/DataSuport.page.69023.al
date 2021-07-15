@@ -39,13 +39,16 @@ page 69023 "Data Suport"
     {
         area(Processing)
         {
-            action(ActionName)
+            action(ViewRows)
             {
                 ApplicationArea = All;
-
+                Image = View;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
                 trigger OnAction()
                 begin
-
+                    CurrPage.FiltersSubf.Page.OpenRowsPage();
                 end;
             }
         }

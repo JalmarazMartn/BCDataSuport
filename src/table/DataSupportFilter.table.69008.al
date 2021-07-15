@@ -45,9 +45,10 @@ table 69008 "Data Support Filter"
     }
     procedure FilterRecordref(Var RecordRef: RecordRef)
     begin
-        FindSet();
         Clear(RecordRef);
         RecordRef.Open("Filter Table No.");
+        if not FindSet() then
+            exit;
         repeat
             FilterFieldRef(RecordRef);
         until next = 0;
@@ -59,6 +60,20 @@ table 69008 "Data Support Filter"
     begin
         FieldRef := RecordRef.Field("Filter Field No.");
         FieldRef.SetFilter("Filter Value");
+    end;
+
+    procedure FillDataSupportRows(var TempRowDataSupportBuffer: Record "Data Support Buffer" temporary)
+    var
+        RecordRef: RecordRef;
+    begin
+        FilterRecordref(RecordRef);
+        RecordRef.FindSet();
+        repeat
+            TempRowDataSupportBuffer.RecId := RecordRef.RecordId;
+            TempRowDataSupportBuffer.TableNo := RecordRef.Number;
+            TempRowDataSupportBuffer.Insert();
+        until RecordRef.Next() = 0;
+
     end;
 
 }

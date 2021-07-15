@@ -39,6 +39,14 @@ page 69024 "Support Data Filters"
         TableNo := NewTableNo;
     end;
 
+    procedure OpenRowsPage()
+    var
+        DataSupportRows: page "Data Support Rows";
+    begin
+        DataSupportRows.LoadRows(Rec);
+        DataSupportRows.Run();
+    end;
+
     var
         TableNo: Integer;
 }

@@ -32,9 +32,13 @@ table 69007 "Data Support Buffer"
 
     keys
     {
-        key(Key1; RecId)
+        key(Key1; RecId, FieldNo)
         {
             Clustered = true;
         }
     }
+    procedure GetRecIdText(): Text
+    begin
+        exit(StrSubstNo('%1', RecId));
+    end;
 }
