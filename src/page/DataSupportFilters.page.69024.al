@@ -1,4 +1,4 @@
-page 69024 "Support Data Filters"
+page 69024 "Data Support Filters"
 {
     PageType = ListPart;
     SourceTable = "Data Support Filter";

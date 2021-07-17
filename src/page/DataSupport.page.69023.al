@@ -1,4 +1,4 @@
-page 69023 "Data Suport"
+page 69023 "Data Support"
 {
     PageType = Card;
     ApplicationArea = All;
@@ -27,7 +27,7 @@ page 69023 "Data Suport"
             }
             group(Filters)
             {
-                part(FiltersSubf; "Support Data Filters")
+                part(FiltersSubf; "Data Support Filters")
                 {
                     ApplicationArea = All;
                 }
