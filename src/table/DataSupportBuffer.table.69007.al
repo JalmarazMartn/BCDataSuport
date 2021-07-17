@@ -1,4 +1,6 @@
 table 69007 "Data Support Buffer"
+//Modo focus
+//Page fields con name
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
@@ -26,6 +28,10 @@ table 69007 "Data Support Buffer"
         field(5; FieldValue; Text[250])
         {
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                UpdateRecord()
+            end;
         }
 
     }
@@ -42,24 +48,27 @@ table 69007 "Data Support Buffer"
         exit(StrSubstNo('%1', RecId));
     end;
 
-    procedure FillFieldsFromRow(DataSupportRow: Record "Data Support Buffer" temporary)
+    procedure FillFieldsFromRow(NewRecId: RecordId)
     var
         SourceRecRef: RecordRef;
         i: Integer;
         FieldRef: FieldRef;
     begin
-        SourceRecRef.Get(DataSupportRow.RecId);
+        RecId := NewRecId;
+        if not SourceRecRef.Get(RecId) then
+            exit;
         FOR i := 1 TO SourceRecRef.FIELDCOUNT DO BEGIN
             FieldRef := SourceRecRef.FIELDINDEX(i);
             if ProcessField(FieldRef) then begin
-                Rec := DataSupportRow;
+                TableNo := SourceRecRef.Number;
                 FieldNo := FieldRef.Number;
                 FieldName := FieldRef.Name;
                 FieldValue := Format(FieldRef.Value);
-                Insert();
+                if not Insert() then
+                    Modify();
             end;
         END;
-
+        if FindFirst() then;
     end;
 
     local procedure ProcessField(var FieldRef: FieldRef): Boolean
@@ -77,5 +86,34 @@ table 69007 "Data Support Buffer"
                              FieldRef.Type::Option,
                              FieldRef.Type::Text,
                              FieldRef.Type::Time]);
+    end;
+
+    local procedure UpdateRecord()
+    var
+        RowRecordRef: RecordRef;
+        FieldRef: FieldRef;
+        PrevRec: Record "Data Support Buffer";
+    begin
+        PrevRec := rec;
+        RowRecordRef.get(RecId);
+        FieldRef := RowRecordRef.Field(FieldNo);
+        if not SetValueToField(FieldRef) then begin
+            Message(GetLastErrorText());
+            FieldValue := PrevRec.FieldValue;
+            exit;
+        end;
+        FieldRef.Validate();
+        RowRecordRef.Modify();
+        FillFieldsFromRow(RecId);
+        rec := PrevRec;
+        if Find() then;
+    end;
+
+    [TryFunction]
+    local procedure SetValueToField(var FieldRef: FieldRef)
+    var
+    begin
+        ClearLastError();
+        FieldRef.Value := FieldValue;
     end;
 }

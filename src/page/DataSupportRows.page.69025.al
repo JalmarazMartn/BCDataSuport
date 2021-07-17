@@ -9,18 +9,20 @@ page 69025 "Data Support Rows"
     {
         area(Content)
         {
-            repeater(GroupName)
+            part(DataFields; "Data Support Fields")
             {
+                ApplicationArea = All;
+            }
+
+            repeater(Rows)
+            {
+                Caption = 'Rows';
                 field(RecId; rec.GetRecIdText())
                 {
                     ApplicationArea = All;
 
                 }
             }
-        }
-        area(Factboxes)
-        {
-
         }
     }
 
@@ -31,7 +33,6 @@ page 69025 "Data Support Rows"
             action(ActionName)
             {
                 ApplicationArea = All;
-
                 trigger OnAction();
                 begin
 
@@ -39,6 +40,11 @@ page 69025 "Data Support Rows"
             }
         }
     }
+    trigger OnAfterGetCurrRecord()
+    begin
+        CurrPage.DataFields.Page.SetDataRow(rec);
+    end;
+
     procedure LoadRows(var TempDataSupportFilter: Record "Data Support Filter" temporary)
     var
     begin
