@@ -3,7 +3,7 @@ page 69025 "Data Support Rows"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "Data Support Buffer";
+    SourceTable = "Data Support Row";
     SourceTableTemporary = true;
     layout
     {
@@ -12,11 +12,13 @@ page 69025 "Data Support Rows"
             part(DataFields; "Data Support Fields")
             {
                 ApplicationArea = All;
+                ShowFilter = true;
             }
 
             repeater(Rows)
             {
                 Caption = 'Rows';
+                ShowCaption = true;
                 field(RecId; rec.GetRecIdText())
                 {
                     ApplicationArea = All;
@@ -42,7 +44,7 @@ page 69025 "Data Support Rows"
     }
     trigger OnAfterGetCurrRecord()
     begin
-        CurrPage.DataFields.Page.SetDataRow(rec);
+        CurrPage.DataFields.Page.SetDataRow(rec.RecId);
     end;
 
     procedure LoadRows(var TempDataSupportFilter: Record "Data Support Filter" temporary)

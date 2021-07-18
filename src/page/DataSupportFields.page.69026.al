@@ -1,7 +1,7 @@
 page 69026 "Data Support Fields"
 {
     PageType = ListPart;
-    SourceTable = "Data Support Buffer";
+    SourceTable = "Data Support Field";
     InsertAllowed = false;
     DeleteAllowed = false;
     layout
@@ -23,16 +23,30 @@ page 69026 "Data Support Fields"
     }
     Actions
     {
+
         area(Processing)
         {
+            group(Process)
+            {
+                action(Action)
+                {
+                    ApplicationArea = All;
+                    Promoted = true;
+                    Image = Payroll;
+                    trigger OnAction()
+                    begin
+                        Message('Super');
+                    end;
+                }
 
+            }
         }
     }
-    procedure SetDataRow(DataSupportRow: Record "Data Support Buffer" temporary)
+    procedure SetDataRow(NewRecId: RecordId)
     begin
         rec.Reset();
         rec.DeleteAll();
-        rec.FillFieldsFromRow(DataSupportRow.RecId);
+        rec.FillFieldsFromRow(NewRecId);
         CurrPage.Update();
     end;
 }

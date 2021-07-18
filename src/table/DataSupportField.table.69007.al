@@ -1,8 +1,7 @@
-table 69007 "Data Support Buffer"
+table 69007 "Data Support Field"
 //Modo focus
 //Error cambiar la clave del registro???
 //Tratar Option
-//Buffer de filas
 //FormatExpr
 {
     DataClassification = CustomerContent;
@@ -95,7 +94,7 @@ table 69007 "Data Support Buffer"
     var
         RowRecordRef: RecordRef;
         FieldRef: FieldRef;
-        PrevRec: Record "Data Support Buffer";
+        PrevRec: Record "Data Support Field";
     begin
         PrevRec := rec;
         RowRecordRef.get(RecId);

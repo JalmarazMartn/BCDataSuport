@@ -72,11 +72,14 @@ table 69008 "Data Support Filter"
         FieldRef.SetFilter("Filter Value");
     end;
 
-    procedure FillDataSupportRows(var TempRowDataSupportBuffer: Record "Data Support Buffer" temporary)
+    procedure FillDataSupportRows(var TempRowDataSupportBuffer: Record "Data Support Row" temporary)
     var
         RecordRef: RecordRef;
     begin
         FilterRecordref(RecordRef);
+        if RecordRef.count > 100 then
+            if not Confirm(ManyRowsQst, false, RecordRef.Count) then
+                exit;
         RecordRef.FindSet();
         repeat
             TempRowDataSupportBuffer.RecId := RecordRef.RecordId;
@@ -86,4 +89,6 @@ table 69008 "Data Support Filter"
 
     end;
 
+    var
+        ManyRowsQst: Label 'You will open a page with %1 rows. Are you sure?';
 }
