@@ -3,6 +3,7 @@ table 69007 "Data Support Buffer"
 //Error cambiar la clave del registro???
 //Tratar Option
 //Buffer de filas
+//FormatExpr
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
