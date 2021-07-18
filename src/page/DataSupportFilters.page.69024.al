@@ -13,7 +13,6 @@ page 69024 "Data Support Filters"
                 field(FieldNo; rec."Filter Field No.")
                 {
                     ApplicationArea = All;
-
                 }
                 field("Filter Value"; Rec."Filter Value")
                 {

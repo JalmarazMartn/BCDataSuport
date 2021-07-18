@@ -1,6 +1,8 @@
 table 69007 "Data Support Buffer"
 //Modo focus
-//Page fields con name
+//Error cambiar la clave del registro???
+//Tratar Option
+//Buffer de filas
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
@@ -104,6 +106,7 @@ table 69007 "Data Support Buffer"
         end;
         FieldRef.Validate();
         RowRecordRef.Modify();
+        PrevRec := rec;
         FillFieldsFromRow(RecId);
         rec := PrevRec;
         if Find() then;
@@ -112,8 +115,60 @@ table 69007 "Data Support Buffer"
     [TryFunction]
     local procedure SetValueToField(var FieldRef: FieldRef)
     var
+        TestBoolean: Boolean;
+        TestDate: Date;
+        TestTime: Time;
+        TestDateFormula: DateFormula;
+        TestDateTime: DateTime;
+        TestDuration: Duration;
+        TestDecimal: Decimal;
     begin
         ClearLastError();
-        FieldRef.Value := FieldValue;
+        Case FieldRef.Type of
+            FieldRef.Type::Boolean:
+                begin
+                    Evaluate(TestBoolean, FieldValue);
+                    FieldRef.Value := TestBoolean;
+                end;
+            FieldRef.Type::Code, FieldRef.Type::Text, FieldRef.Type::Integer:
+                FieldRef.Value := FieldValue;
+            FieldRef.Type::Date:
+                begin
+                    Evaluate(TestDate, FieldValue);
+                    FieldRef.Value := TestDate;
+                end;
+            FieldRef.Type::DateFormula:
+                begin
+                    Evaluate(TestDateFormula, FieldValue);
+                    FieldRef.Value := TestDateFormula;
+                end;
+            FieldRef.Type::DateTime:
+                begin
+                    Evaluate(TestDateTime, FieldValue);
+                    FieldRef.Value := TestDateTime;
+
+                end;
+            FieldRef.Type::Decimal:
+                begin
+                    Evaluate(TestDecimal, FieldValue);
+                    FieldRef.Value := TestDecimal;
+
+                end;
+            FieldRef.Type::Duration:
+                begin
+                    Evaluate(TestDuration, FieldValue);
+                    FieldRef.Value := TestDuration;
+                end;
+            FieldRef.Type::Option:
+                begin
+                    error('To.Do');
+                end;
+
+            FieldRef.Type::Time:
+                begin
+                    Evaluate(TestTime, FieldValue);
+                    FieldRef.Value := TestTime;
+                end;
+        end;
     end;
 }

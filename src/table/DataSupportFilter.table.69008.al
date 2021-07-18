@@ -16,6 +16,16 @@ table 69008 "Data Support Filter"
             begin
                 CalcFields(FieldName);
             end;
+
+            trigger OnLookup()
+            var
+                SelectField: Record Field;
+            begin
+                SelectField.SetRange(TableNo, "Filter Table No.");
+                if page.RunModal(Page::"Data Support Select Field", SelectField) = Action::LookupOK then
+                    Validate("Filter Field No.", SelectField."No.");
+
+            end;
         }
         field(3; "Filter Value"; Text[500])
         {
