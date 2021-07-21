@@ -9,6 +9,10 @@ page 69027 "Data Support Select Field"
         {
             repeater(GroupName)
             {
+                field("No."; rec."No.")
+                {
+                    ApplicationArea = All;
+                }
                 field(FieldName; Rec.FieldName)
                 {
                     ApplicationArea = All;

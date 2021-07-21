@@ -1,6 +1,6 @@
 page 69026 "Data Support Fields"
 {
-    PageType = ListPart;
+    PageType = List;
     SourceTable = "Data Support Field";
     InsertAllowed = false;
     DeleteAllowed = false;

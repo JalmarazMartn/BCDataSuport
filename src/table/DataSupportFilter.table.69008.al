@@ -24,7 +24,6 @@ table 69008 "Data Support Filter"
                 SelectField.SetRange(TableNo, "Filter Table No.");
                 if page.RunModal(Page::"Data Support Select Field", SelectField) = Action::LookupOK then
                     Validate("Filter Field No.", SelectField."No.");
-
             end;
         }
         field(3; "Filter Value"; Text[500])
@@ -81,9 +80,11 @@ table 69008 "Data Support Filter"
             if not Confirm(ManyRowsQst, false, RecordRef.Count) then
                 exit;
         RecordRef.FindSet();
+        TempRowDataSupportBuffer.SetDataSupportFilter(Rec);
         repeat
             TempRowDataSupportBuffer.RecId := RecordRef.RecordId;
             TempRowDataSupportBuffer.TableNo := RecordRef.Number;
+            TempRowDataSupportBuffer.FillFieldValues();
             TempRowDataSupportBuffer.Insert();
         until RecordRef.Next() = 0;
 
