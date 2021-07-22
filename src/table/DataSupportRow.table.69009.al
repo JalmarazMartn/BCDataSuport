@@ -22,36 +22,65 @@ table 69009 "Data Support Row"
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(1);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo1, FieldValue1);
+            end;
+
         }
         field(4; FieldValue2; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(2);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo2, FieldValue2);
+            end;
         }
         field(5; FieldValue3; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(3);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo3, FieldValue3);
+            end;
         }
         field(6; FieldValue4; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(4);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo4, FieldValue4);
+            end;
         }
         field(7; FieldValue5; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(5);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo5, FieldValue5);
+            end;
         }
         field(8; FieldValue6; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(6);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo6, FieldValue6);
+            end;
         }
         field(9; FieldValue7; Text[100])
         {
             DataClassification = CustomerContent;
             CaptionClass = GetFieldName(7);
+            trigger OnValidate()
+            begin
+                UpdateFieldValue(FieldNo7, FieldValue7);
+            end;
         }
         field(21; FieldNo1; Integer)
         {
@@ -195,6 +224,29 @@ table 69009 "Data Support Row"
                 end
             end;
         until TempDataSupportFilter.next = 0;
+    end;
+
+    local procedure UpdateFieldValue(PosFieldNo: Integer; PosFieldValue: text)
+    var
+        TempDataSupportField: Record "Data Support Field" temporary;
+    begin
+        TempDataSupportField.FillFieldsFromRow(RecId);
+        TempDataSupportField.get(RecId, PosFieldNo);
+        TempDataSupportField.Validate(FieldValue, PosFieldValue);
+        RefreshValues(TempDataSupportField, FieldNo1, FieldValue1);
+        RefreshValues(TempDataSupportField, FieldNo2, FieldValue2);
+        RefreshValues(TempDataSupportField, FieldNo3, FieldValue3);
+        RefreshValues(TempDataSupportField, FieldNo4, FieldValue4);
+        RefreshValues(TempDataSupportField, FieldNo5, FieldValue5);
+        RefreshValues(TempDataSupportField, FieldNo6, FieldValue6);
+        RefreshValues(TempDataSupportField, FieldNo7, FieldValue7);
+    end;
+
+    local procedure RefreshValues(var TempDataSupportField: Record "Data Support Field" temporary; OtherFieldNo: Integer; var OtherFiedlValue: Text)
+    var
+    begin
+        if TempDataSupportField.Get(RecId, OtherFieldNo) then
+            OtherFiedlValue := TempDataSupportField.FieldValue;
     end;
 
     var
