@@ -25,6 +25,25 @@ page 69024 "Data Support Filters"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(GetFields)
+            {
+                ApplicationArea = All;
+                Image = SuggestField;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                begin
+                    rec.SelectFieldsFromPage();
+                end;
+            }
+        }
+    }
+
     trigger OnNewRecord(Bellowxrec: Boolean)
     begin
         rec."Filter Table No." := TableNo;

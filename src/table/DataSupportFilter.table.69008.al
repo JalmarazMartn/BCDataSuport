@@ -16,15 +16,6 @@ table 69008 "Data Support Filter"
             begin
                 CalcFields(FieldName);
             end;
-
-            trigger OnLookup()
-            var
-                SelectField: Record Field;
-            begin
-                SelectField.SetRange(TableNo, "Filter Table No.");
-                if page.RunModal(Page::"Data Support Select Field", SelectField) = Action::LookupOK then
-                    Validate("Filter Field No.", SelectField."No.");
-            end;
         }
         field(3; "Filter Value"; Text[500])
         {
@@ -47,7 +38,7 @@ table 69008 "Data Support Filter"
 
     keys
     {
-        key(Key1; "Filter Field No.")
+        key(Key1; "Filter Table No.", "Filter Field No.")
         {
             Clustered = true;
         }
@@ -88,6 +79,26 @@ table 69008 "Data Support Filter"
             TempRowDataSupportBuffer.Insert();
         until RecordRef.Next() = 0;
 
+    end;
+
+    procedure SelectFieldsFromPage()
+    var
+        DataSupportSelectField: page "Data Support Select Field";
+        SelectedField: Record Field;
+    begin
+        SelectedField.SetRange(TableNo, "Filter Table No.");
+        Clear(DataSupportSelectField);
+        DataSupportSelectField.LookupMode(true);
+        DataSupportSelectField.SetTableView(SelectedField);
+        if DataSupportSelectField.RunModal() <> Action::LookupOK then
+            exit;
+        DataSupportSelectField.SetSelectionFilter(SelectedField);
+        SelectedField.FindSet();
+        repeat
+            "Filter Table No." := SelectedField.TableNo;
+            Validate("Filter Field No.", SelectedField."No.");
+            if Insert() then;
+        until SelectedField.next = 0;
     end;
 
     var

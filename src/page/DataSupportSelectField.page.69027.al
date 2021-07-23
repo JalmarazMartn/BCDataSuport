@@ -21,4 +21,8 @@ page 69027 "Data Support Select Field"
             }
         }
     }
+    procedure GetSelection(var SelectedFields: Record Field)
+    begin
+        CurrPage.SetSelectionFilter(SelectedFields);
+    end;
 }
