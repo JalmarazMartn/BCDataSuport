@@ -55,12 +55,21 @@ page 69025 "Data Support Rows"
     {
         area(Processing)
         {
-            action(ActionName)
+            action(EditAllFields)
             {
+                Image = EditAdjustments;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
                 ApplicationArea = All;
                 trigger OnAction();
+                var
+                    TempDataSupportField: Record "Data Support Field" temporary;
                 begin
-
+                    TempDataSupportField.FillFieldsFromRow(Rec.RecId);
+                    Page.RunModal(page::"Data Support Fields", TempDataSupportField);
+                    rec.FillFieldValues();
+                    CurrPage.Update();
                 end;
             }
         }
