@@ -1,8 +1,8 @@
 table 69007 "Data Support Field"
-//Modo focus
 //Error cambiar la clave del registro???
 //Tratar Option
 //FormatExpr
+//Borrado
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
@@ -11,7 +11,6 @@ table 69007 "Data Support Field"
         field(1; RecId; RecordId)
         {
             DataClassification = CustomerContent;
-
         }
         field(2; TableNo; Integer)
         {
@@ -33,6 +32,11 @@ table 69007 "Data Support Field"
             trigger OnValidate()
             begin
                 UpdateRecord()
+            end;
+
+            trigger OnLookup()
+            begin
+                LookupTableRelationAndOptions();
             end;
         }
 
@@ -99,11 +103,7 @@ table 69007 "Data Support Field"
         PrevRec := rec;
         RowRecordRef.get(RecId);
         FieldRef := RowRecordRef.Field(FieldNo);
-        if not SetValueToField(FieldRef) then begin
-            Message(GetLastErrorText());
-            FieldValue := PrevRec.FieldValue;
-            exit;
-        end;
+        SetValueToField(FieldRef);
         FieldRef.Validate();
         RowRecordRef.Modify();
         PrevRec := rec;
@@ -112,7 +112,6 @@ table 69007 "Data Support Field"
         if Find() then;
     end;
 
-    [TryFunction]
     local procedure SetValueToField(var FieldRef: FieldRef)
     var
         TestBoolean: Boolean;
@@ -161,7 +160,7 @@ table 69007 "Data Support Field"
                 end;
             FieldRef.Type::Option:
                 begin
-                    error('To.Do');
+                    FieldRef.Value := GetIntegerOption(FieldRef);
                 end;
 
             FieldRef.Type::Time:
@@ -169,6 +168,37 @@ table 69007 "Data Support Field"
                     Evaluate(TestTime, FieldValue);
                     FieldRef.Value := TestTime;
                 end;
+        end;
+    end;
+
+    procedure LookupTableRelationAndOptions()
+    var
+        RecordRef: RecordRef;
+        FieldRef: FieldRef;
+
+    begin
+        if not RecordRef.Get(RecId) then
+            exit;
+        FieldRef := RecordRef.Field(FieldNo);
+        if FieldRef.Type = FieldRef.Type::Option then begin
+            Message(FieldRef.OptionCaption);
+        end;
+        if FieldRef.Relation = 0 then
+            exit;
+        Hyperlink(GetUrl(ClientType::Current, CompanyName, ObjectType::Table, FieldRef.Relation));
+    end;
+
+    local procedure GetIntegerOption(FieldRef: FieldRef): Integer
+    var
+        OptArray: List of [Text];
+        i: Integer;
+    begin
+        OptArray := FieldRef.OptionCaption.Split(',');
+        for i := 1 to OptArray.Count do begin
+            if StrPos(OptArray.get(i), FieldValue) = 1 then begin
+                FieldValue := OptArray.get(i);
+                exit(i - 1);
+            end;
         end;
     end;
 }

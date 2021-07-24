@@ -1,8 +1,6 @@
 page 69025 "Data Support Rows"
 {
     PageType = List;
-    ApplicationArea = All;
-    UsageCategory = Lists;
     SourceTable = "Data Support Row";
     SourceTableTemporary = true;
     layout

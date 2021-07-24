@@ -36,6 +36,7 @@ page 69024 "Data Support Filters"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+                PromotedOnly = true;
                 trigger OnAction()
                 begin
                     rec.SelectFieldsFromPage();
