@@ -1,9 +1,4 @@
 table 69009 "Data Support Row"
-//Modo focus
-//Error cambiar la clave del registro???
-//Tratar Option
-//Buffer de filas
-//FormatExpr
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
@@ -27,6 +22,10 @@ table 69009 "Data Support Row"
                 UpdateFieldValue(FieldNo1, FieldValue1);
             end;
 
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo1);
+            end;
         }
         field(4; FieldValue2; Text[100])
         {
@@ -36,6 +35,12 @@ table 69009 "Data Support Row"
             begin
                 UpdateFieldValue(FieldNo2, FieldValue2);
             end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo2);
+            end;
+
         }
         field(5; FieldValue3; Text[100])
         {
@@ -44,6 +49,11 @@ table 69009 "Data Support Row"
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo3, FieldValue3);
+            end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo3);
             end;
         }
         field(6; FieldValue4; Text[100])
@@ -54,6 +64,11 @@ table 69009 "Data Support Row"
             begin
                 UpdateFieldValue(FieldNo4, FieldValue4);
             end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo4);
+            end;
         }
         field(7; FieldValue5; Text[100])
         {
@@ -62,6 +77,11 @@ table 69009 "Data Support Row"
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo5, FieldValue5);
+            end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo5);
             end;
         }
         field(8; FieldValue6; Text[100])
@@ -72,6 +92,11 @@ table 69009 "Data Support Row"
             begin
                 UpdateFieldValue(FieldNo6, FieldValue6);
             end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo6);
+            end;
         }
         field(9; FieldValue7; Text[100])
         {
@@ -80,6 +105,11 @@ table 69009 "Data Support Row"
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo7, FieldValue7);
+            end;
+
+            trigger OnLookup()
+            begin
+                LookupField(FieldNo7);
             end;
         }
         field(21; FieldNo1; Integer)
@@ -230,6 +260,15 @@ table 69009 "Data Support Row"
     begin
         if TempDataSupportField.Get(RecId, OtherFieldNo) then
             OtherFiedlValue := TempDataSupportField.FieldValue;
+    end;
+
+    local procedure LookupField(FieldNumber: Integer)
+    var
+        TempDataSupportField: record "Data Support Field" temporary;
+    begin
+        TempDataSupportField.RecId := RecId;
+        TempDataSupportField.FieldNo := FieldNumber;
+        TempDataSupportField.LookupTableRelationAndOptions();
     end;
 
     var
