@@ -3,7 +3,7 @@ page 69023 "Data Support"
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
-    AdditionalSearchTerms = 'Be carefull!!,Modify all data without related page';
+    AdditionalSearchTerms = 'Dangerous data modifier,Modify all data without related page';
     layout
     {
         area(Content)
