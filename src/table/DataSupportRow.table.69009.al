@@ -21,7 +21,7 @@ table 69009 "Data Support Row"
         field(3; FieldValue1; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(1);
+            CaptionClass = GetFieldName(FieldNo1);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo1, FieldValue1);
@@ -31,7 +31,7 @@ table 69009 "Data Support Row"
         field(4; FieldValue2; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(2);
+            CaptionClass = GetFieldName(FieldNo2);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo2, FieldValue2);
@@ -40,7 +40,7 @@ table 69009 "Data Support Row"
         field(5; FieldValue3; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(3);
+            CaptionClass = GetFieldName(FieldNo3);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo3, FieldValue3);
@@ -49,7 +49,7 @@ table 69009 "Data Support Row"
         field(6; FieldValue4; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(4);
+            CaptionClass = GetFieldName(FieldNo4);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo4, FieldValue4);
@@ -58,7 +58,7 @@ table 69009 "Data Support Row"
         field(7; FieldValue5; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(5);
+            CaptionClass = GetFieldName(FieldNo5);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo5, FieldValue5);
@@ -67,7 +67,7 @@ table 69009 "Data Support Row"
         field(8; FieldValue6; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(6);
+            CaptionClass = GetFieldName(FieldNo6);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo6, FieldValue6);
@@ -76,7 +76,7 @@ table 69009 "Data Support Row"
         field(9; FieldValue7; Text[100])
         {
             DataClassification = CustomerContent;
-            CaptionClass = GetFieldName(7);
+            CaptionClass = GetFieldName(FieldNo7);
             trigger OnValidate()
             begin
                 UpdateFieldValue(FieldNo7, FieldValue7);
@@ -132,29 +132,12 @@ table 69009 "Data Support Row"
         exit(StrSubstNo('%1', RecId));
     end;
 
-    procedure GetFieldName(index: Integer): Text[30]
+    procedure GetFieldName(CaptionFieldNo: Integer): Text[30]
     var
         FieldRef: FieldRef;
         Recordref: RecordRef;
-        CaptionFieldNo: Integer;
     begin
         Recordref.Open(TableNo);
-        case index of
-            1:
-                CaptionFieldNo := FieldNo1;
-            2:
-                CaptionFieldNo := FieldNo2;
-            3:
-                CaptionFieldNo := FieldNo3;
-            4:
-                CaptionFieldNo := FieldNo4;
-            5:
-                CaptionFieldNo := FieldNo5;
-            6:
-                CaptionFieldNo := FieldNo6;
-            7:
-                CaptionFieldNo := FieldNo7;
-        end;
         if CaptionFieldNo = 0 then
             exit;
         FieldRef := Recordref.Field(CaptionFieldNo);

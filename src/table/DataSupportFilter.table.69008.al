@@ -70,7 +70,8 @@ table 69008 "Data Support Filter"
         if RecordRef.count > 100 then
             if not Confirm(ManyRowsQst, false, RecordRef.Count) then
                 exit;
-        RecordRef.FindSet();
+        if not RecordRef.FindSet() then
+            Error(ThereAreNoRowsErr);
         TempRowDataSupportBuffer.SetDataSupportFilter(Rec);
         repeat
             TempRowDataSupportBuffer.RecId := RecordRef.RecordId;
@@ -103,4 +104,5 @@ table 69008 "Data Support Filter"
 
     var
         ManyRowsQst: Label 'You will open a page with %1 rows. Are you sure?';
+        ThereAreNoRowsErr: Label 'There are no rows to show';
 }
