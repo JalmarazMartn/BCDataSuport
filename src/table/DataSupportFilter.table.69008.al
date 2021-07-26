@@ -27,6 +27,15 @@ table 69008 "Data Support Filter"
                 Recordref.Open("Filter Table No.");
                 FilterFieldRef(Recordref);
             end;
+
+            trigger OnLookup()
+            var
+                TempDataSupportField: Record "Data Support Field" temporary;
+            begin
+                TempDataSupportField.TableNo := "Filter Table No.";
+                TempDataSupportField."Field No." := "Filter Field No.";
+                TempDataSupportField.LookupTableRelationAndOptions();
+            end;
         }
         field(4; FieldName; Text[50])
         {

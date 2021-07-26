@@ -10,7 +10,7 @@ page 69026 "Data Support Fields"
         {
             repeater(GroupName)
             {
-                field(FieldName; rec.FieldName)
+                field(FieldName; rec."Field Name")
                 {
                     ApplicationArea = All;
                 }

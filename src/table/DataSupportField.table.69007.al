@@ -16,11 +16,11 @@ table 69007 "Data Support Field"
         {
             DataClassification = CustomerContent;
         }
-        field(3; FieldNo; Integer)
+        field(3; "Field No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(4; FieldName; Text[30])
+        field(4; "Field Name"; Text[30])
         {
             DataClassification = CustomerContent;
             Editable = false;
@@ -44,7 +44,7 @@ table 69007 "Data Support Field"
 
     keys
     {
-        key(Key1; RecId, FieldNo)
+        key(Key1; RecId, "Field No.")
         {
             Clustered = true;
         }
@@ -67,8 +67,8 @@ table 69007 "Data Support Field"
             FieldRef := SourceRecRef.FIELDINDEX(i);
             if ProcessField(FieldRef) then begin
                 TableNo := SourceRecRef.Number;
-                FieldNo := FieldRef.Number;
-                FieldName := FieldRef.Name;
+                "Field No." := FieldRef.Number;
+                "Field Name" := FieldRef.Name;
                 FieldValue := Format(FieldRef.Value);
                 if not Insert() then
                     Modify();
@@ -102,7 +102,7 @@ table 69007 "Data Support Field"
     begin
         PrevRec := rec;
         RowRecordRef.get(RecId);
-        FieldRef := RowRecordRef.Field(FieldNo);
+        FieldRef := RowRecordRef.Field("Field No.");
         SetValueToField(FieldRef);
         FieldRef.Validate();
         RowRecordRef.Modify();
@@ -179,7 +179,7 @@ table 69007 "Data Support Field"
     begin
         if not RecordRef.Get(RecId) then
             exit;
-        FieldRef := RecordRef.Field(FieldNo);
+        FieldRef := RecordRef.Field("Field No.");
         if FieldRef.Type = FieldRef.Type::Option then begin
             Message(FieldRef.OptionCaption);
         end;

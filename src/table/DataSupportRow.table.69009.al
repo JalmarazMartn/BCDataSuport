@@ -157,6 +157,14 @@ table 69009 "Data Support Row"
             Clustered = true;
         }
     }
+    trigger OnDelete()
+    var
+        RecordRef: RecordRef;
+    begin
+        RecordRef.Get(RecId);
+        RecordRef.Delete(true);
+    end;
+
     procedure GetRecIdText(): Text
     begin
         exit(StrSubstNo('%1', RecId));
@@ -196,42 +204,42 @@ table 69009 "Data Support Row"
                     1:
                         begin
                             FieldValue1 := TempDataSupportField.FieldValue;
-                            FieldNo1 := TempDataSupportField.FieldNo;
+                            FieldNo1 := TempDataSupportField."Field No.";
                         end;
 
                     2:
                         begin
                             FieldValue2 := TempDataSupportField.FieldValue;
-                            FieldNo2 := TempDataSupportField.FieldNo;
+                            FieldNo2 := TempDataSupportField."Field No.";
                         end;
                     3:
                         begin
                             FieldValue3 := TempDataSupportField.FieldValue;
-                            FieldNo3 := TempDataSupportField.FieldNo;
+                            FieldNo3 := TempDataSupportField."Field No.";
                         end;
 
                     4:
                         begin
                             FieldValue4 := TempDataSupportField.FieldValue;
-                            FieldNo4 := TempDataSupportField.FieldNo;
+                            FieldNo4 := TempDataSupportField."Field No.";
                         end;
 
                     5:
                         begin
                             FieldValue5 := TempDataSupportField.FieldValue;
-                            FieldNo5 := TempDataSupportField.FieldNo;
+                            FieldNo5 := TempDataSupportField."Field No.";
                         end;
 
                     6:
                         begin
                             FieldValue6 := TempDataSupportField.FieldValue;
-                            FieldNo6 := TempDataSupportField.FieldNo;
+                            FieldNo6 := TempDataSupportField."Field No.";
                         end;
 
                     7:
                         begin
                             FieldValue7 := TempDataSupportField.FieldValue;
-                            FieldNo7 := TempDataSupportField.FieldNo;
+                            FieldNo7 := TempDataSupportField."Field No.";
                         end;
 
                 end
@@ -267,7 +275,7 @@ table 69009 "Data Support Row"
         TempDataSupportField: record "Data Support Field" temporary;
     begin
         TempDataSupportField.RecId := RecId;
-        TempDataSupportField.FieldNo := FieldNumber;
+        TempDataSupportField."Field No." := FieldNumber;
         TempDataSupportField.LookupTableRelationAndOptions();
     end;
 
