@@ -25,7 +25,7 @@ page 69023 "Data Support"
                     ApplicationArea = All;
                 }
             }
-            group(Filters)
+            group(FieldsToShow)
             {
                 part(FiltersSubf; "Data Support Filters")
                 {

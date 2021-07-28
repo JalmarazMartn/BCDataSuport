@@ -1,5 +1,6 @@
 page 69024 "Data Support Filters"
 {
+    Caption = 'Fields To Show';
     PageType = ListPart;
     SourceTable = "Data Support Filter";
     SourceTableTemporary = true;

@@ -178,7 +178,7 @@ table 69007 "Data Support Field"
 
     begin
         if not RecordRef.Get(RecId) then
-            exit;
+            RecordRef.Open(TableNo);
         FieldRef := RecordRef.Field("Field No.");
         if FieldRef.Type = FieldRef.Type::Option then begin
             Message(FieldRef.OptionCaption);

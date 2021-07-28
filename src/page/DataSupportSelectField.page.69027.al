@@ -16,7 +16,10 @@ page 69027 "Data Support Select Field"
                 field(FieldName; Rec.FieldName)
                 {
                     ApplicationArea = All;
-
+                }
+                field(Type; Rec.Type)
+                {
+                    ApplicationArea = All;
                 }
             }
         }
