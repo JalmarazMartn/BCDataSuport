@@ -97,6 +97,7 @@ table 69008 "Data Support Filter"
         SelectedField: Record Field;
     begin
         SelectedField.SetRange(TableNo, "Filter Table No.");
+        SelectedField.SetRange(ObsoleteState, SelectedField.ObsoleteState::No);
         Clear(DataSupportSelectField);
         DataSupportSelectField.LookupMode(true);
         DataSupportSelectField.SetTableView(SelectedField);

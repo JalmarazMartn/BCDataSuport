@@ -19,6 +19,13 @@ table 69007 "Data Support Field"
         field(3; "Field No."; Integer)
         {
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            var
+                Field: Record Field;
+            begin
+                if Field.Get(TableNo, "Field No.") then
+                    Field.TestField(ObsoleteState, Field.ObsoleteState::No);
+            end;
         }
         field(4; "Field Name"; Text[30])
         {
@@ -65,8 +72,8 @@ table 69007 "Data Support Field"
             exit;
         FOR i := 1 TO SourceRecRef.FIELDCOUNT DO BEGIN
             FieldRef := SourceRecRef.FIELDINDEX(i);
+            TableNo := SourceRecRef.Number;
             if ProcessField(FieldRef) then begin
-                TableNo := SourceRecRef.Number;
                 "Field No." := FieldRef.Number;
                 "Field Name" := FieldRef.Name;
                 FieldValue := Format(FieldRef.Value);
@@ -78,8 +85,14 @@ table 69007 "Data Support Field"
     end;
 
     local procedure ProcessField(var FieldRef: FieldRef): Boolean
+    var
+        Field: Record Field;
     begin
         if FieldRef.Class <> FieldRef.Class::Normal then
+            exit(false);
+        if not Field.Get(TableNo, FieldRef.Number) then
+            exit(false);
+        if Field.ObsoleteState <> Field.ObsoleteState::No then
             exit(false);
         Exit(FieldRef.Type in [FieldRef.Type::Boolean,
                              FieldRef.Type::Code,
