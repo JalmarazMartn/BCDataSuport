@@ -194,7 +194,8 @@ table 69007 "Data Support Field"
             RecordRef.Open(TableNo);
         FieldRef := RecordRef.Field("Field No.");
         if FieldRef.Type = FieldRef.Type::Option then begin
-            Message(FieldRef.OptionCaption);
+            LookupOptionValue(FieldRef);
+            exit;
         end;
         if FieldRef.Relation = 0 then
             exit;
@@ -203,15 +204,28 @@ table 69007 "Data Support Field"
 
     local procedure GetIntegerOption(FieldRef: FieldRef): Integer
     var
-        OptArray: List of [Text];
+        OptionList: List of [Text];
         i: Integer;
     begin
-        OptArray := FieldRef.OptionCaption.Split(',');
-        for i := 1 to OptArray.Count do begin
-            if StrPos(OptArray.get(i), FieldValue) = 1 then begin
-                FieldValue := OptArray.get(i);
+        OptionList := FieldRef.OptionCaption.Split(',');
+        for i := 1 to OptionList.Count do begin
+            if StrPos(OptionList.get(i), FieldValue) = 1 then begin
+                FieldValue := OptionList.get(i);
                 exit(i - 1);
             end;
         end;
+    end;
+
+    local procedure LookupOptionValue(FieldRef: FieldRef)
+    var
+        OptionList: List of [Text];
+        OptionSelection: Integer;
+    begin
+        OptionSelection := StrMenu(FieldRef.OptionCaption);
+        if OptionSelection = 0 then
+            exit;
+        OptionList := FieldRef.OptionCaption.Split(',');
+        FieldValue := OptionList.get(OptionSelection);
+        validate(FieldValue);
     end;
 }
