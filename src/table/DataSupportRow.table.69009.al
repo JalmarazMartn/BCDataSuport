@@ -276,7 +276,9 @@ table 69009 "Data Support Row"
     begin
         TempDataSupportField.RecId := RecId;
         TempDataSupportField."Field No." := FieldNumber;
+        TempDataSupportField.SetCalledFromOutside(true);
         TempDataSupportField.LookupTableRelationAndOptions();
+        UpdateFieldValue(FieldNumber, TempDataSupportField.FieldValue);
     end;
 
     var

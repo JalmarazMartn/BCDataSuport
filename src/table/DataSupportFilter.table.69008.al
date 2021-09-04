@@ -34,7 +34,9 @@ table 69008 "Data Support Filter"
             begin
                 TempDataSupportField.TableNo := "Filter Table No.";
                 TempDataSupportField."Field No." := "Filter Field No.";
+                TempDataSupportField.SetCalledFromOutside(true);
                 TempDataSupportField.LookupTableRelationAndOptions();
+                "Filter Value" := TempDataSupportField.FieldValue;
             end;
         }
         field(4; FieldName; Text[50])

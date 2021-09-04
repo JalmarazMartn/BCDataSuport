@@ -1,8 +1,4 @@
 table 69007 "Data Support Field"
-//Error cambiar la clave del registro???
-//Tratar Option
-//FormatExpr
-//Borrado
 {
     DataClassification = CustomerContent;
     TableType = Temporary;
@@ -226,6 +222,15 @@ table 69007 "Data Support Field"
             exit;
         OptionList := FieldRef.OptionCaption.Split(',');
         FieldValue := OptionList.get(OptionSelection);
-        validate(FieldValue);
+        if not CalledFromOutside then
+            validate(FieldValue);
     end;
+
+    procedure SetCalledFromOutside(NewCalledFromOutside: Boolean)
+    begin
+        CalledFromOutside := NewCalledFromOutside;
+    end;
+
+    var
+        CalledFromOutside: Boolean;
 }

@@ -3,6 +3,8 @@ page 69027 "Data Support Select Field"
     PageType = List;
     SourceTable = Field;
     Editable = false;
+    UsageCategory = Administration;
+    ApplicationArea = All;
     layout
     {
         area(Content)
@@ -18,6 +20,10 @@ page 69027 "Data Support Select Field"
                     ApplicationArea = All;
                 }
                 field(Type; Rec.Type)
+                {
+                    ApplicationArea = All;
+                }
+                field(TableName; rec.TableName)
                 {
                     ApplicationArea = All;
                 }
