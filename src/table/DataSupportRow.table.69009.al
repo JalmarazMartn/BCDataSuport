@@ -273,12 +273,21 @@ table 69009 "Data Support Row"
     local procedure LookupField(FieldNumber: Integer)
     var
         TempDataSupportField: record "Data Support Field" temporary;
+        ReservationEntry: Record "Reservation Entry";
+        Customer: Record Customer;
     begin
+        //ReservationEntry.FieldFilterNeeded(FieldFilter,SearchForSupply,ItemTrackingType)
         TempDataSupportField.RecId := RecId;
         TempDataSupportField."Field No." := FieldNumber;
         TempDataSupportField.SetCalledFromOutside(true);
         TempDataSupportField.LookupTableRelationAndOptions();
         UpdateFieldValue(FieldNumber, TempDataSupportField.FieldValue);
+        Customer.SetCurrentKey("Partner Type", "Country/Region Code");
+    end;
+
+    local procedure RandInt(Range: Integer): Integer
+    begin
+
     end;
 
     var

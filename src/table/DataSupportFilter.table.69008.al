@@ -16,6 +16,11 @@ table 69008 "Data Support Filter"
             begin
                 CalcFields(FieldName);
             end;
+
+            trigger OnLookup()
+            begin
+                SelectFieldsFromPage();
+            end;
         }
         field(3; "Filter Value"; Text[500])
         {
